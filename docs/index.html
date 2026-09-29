@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LeadRadar AI</title>
+<style>
+:root{--bg:#07111f;--panel:#102039;--line:#243d61;--text:#eef5ff;--muted:#91a7c2;--blue:#55a9ff;--green:#54d7aa}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#07111f,#0b1d35);color:var(--text)}
+.wrap{display:grid;grid-template-columns:240px 1fr;min-height:100vh}.side{padding:24px;border-right:1px solid var(--line);background:#081423}
+.brand{font-size:22px;font-weight:800}.brand span{color:var(--blue)}.tag{font-size:10px;color:var(--muted);margin-top:6px}
+nav{display:grid;gap:8px;margin-top:28px}nav button{padding:11px 12px;text-align:left;border:0;border-radius:9px;background:transparent;color:#c3d1e1;cursor:pointer}
+nav button.active,nav button:hover{background:#142944;color:white}.main{padding:28px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center}.top h1{margin:0}
+.btn{border:1px solid var(--line);background:#183150;color:white;border-radius:9px;padding:10px 14px;cursor:pointer}.btn.primary{background:#317fe8}.notice{margin-top:18px;padding:12px 14px;border:1px solid #6c5724;background:#33290f;border-radius:10px;color:#ffe397}
+.grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(5,1fr);margin-top:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}.label{font-size:12px;color:var(--muted)}.value{font-size:28px;font-weight:800;margin-top:7px}
+.two{grid-template-columns:1.35fr .65fr;margin-top:16px}.section h2{margin:0 0 14px;font-size:17px}.opp{padding:12px 0;border-bottom:1px solid #223954}.opp b{display:block}.meta{font-size:12px;color:var(--muted);margin-top:5px}.score{color:var(--green);font-weight:800}
+.hidden{display:none}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{padding:5px 8px;border:1px solid #35577f;border-radius:999px;font-size:11px}.profile{padding:14px;border:1px solid #29466c;border-radius:12px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}.side{border-right:0;border-bottom:1px solid var(--line)}nav{display:flex;overflow:auto}.kpis{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside class="side">
+<div class="brand">LeadRadar <span>AI</span></div><div class="tag">НАЙТИ → ПРОВЕРИТЬ → ОЦЕНИТЬ → ДОСТАВИТЬ</div>
+<nav>
+<button class="active" onclick="show('dash',this)">Обзор</button>
+<button onclick="show('opps',this)">Возможности</button>
+<button onclick="show('profiles',this)">Поисковые профили</button>
+<button onclick="show('delivery',this)">Доставка</button>
+<button onclick="show('settings',this)">Настройки</button>
+</nav>
+</aside>
+<main class="main">
+<div class="top"><div><h1 id="title">Обзор</h1><div class="meta">LeadRadar AI MVP</div></div><button class="btn primary" onclick="searchDemo()">Запустить поиск</button></div>
+<div class="notice">Demo-интерфейс GitHub Pages. Реальный поиск и отправка подключатся после развертывания FastAPI backend.</div>
+<section id="dash">
+<div class="grid kpis">
+<div class="card"><div class="label">Найдено за 24ч</div><div class="value" id="f24">4</div></div>
+<div class="card"><div class="label">Всего возможностей</div><div class="value" id="total">18</div></div>
+<div class="card"><div class="label">В работе</div><div class="value">5</div></div>
+<div class="card"><div class="label">Сумма</div><div class="value">38,4 млн ₽</div></div>
+<div class="card"><div class="label">Доставлено</div><div class="value">16</div></div>
+</div>
+<div class="grid two">
+<div class="card section"><h2>Свежие возможности</h2><div id="recent"></div></div>
+<div class="card section"><h2>Последние поиски</h2><div class="opp"><b>Поиск завершён</b><div class="meta">45 мин назад · 7 найдено · 2 новых</div></div><div class="opp"><b>Поиск завершён</b><div class="meta">6 ч назад · 11 найдено · 3 новых</div></div></div>
+</div>
+</section>
+<section id="opps" class="hidden"><div class="card section"><h2>Opportunity</h2><div id="allOpps"></div></div></section>
+<section id="profiles" class="hidden"><div class="card section"><h2>Search Profiles</h2><div class="profile"><b>Корпоративные электромобили</b><div class="meta">score ≥ 60 · каждые 6 ч · активен</div><div class="chips" style="margin-top:10px"><span class="chip">электромобили</span><span class="chip">тендер</span><span class="chip">закупка</span><span class="chip">автопарк</span><span class="chip">Москва</span></div></div></div></section>
+<section id="delivery" class="hidden"><div class="card section"><h2>Delivery Log</h2><div class="opp"><b>Telegram</b><div class="meta">Opportunity #101 · delivered</div></div><div class="opp"><b>Email</b><div class="meta">Opportunity #101 · delivered</div></div><div class="opp"><b>Webhook</b><div class="meta">Opportunity #102 · delivered</div></div></div></section>
+<section id="settings" class="hidden"><div class="card section"><h2>Настройки</h2><div class="chips"><span class="chip">FastAPI backend</span><span class="chip">PostgreSQL</span><span class="chip">Yandex Search API</span><span class="chip">Telegram</span><span class="chip">Email</span><span class="chip">Partner API</span></div></div></section>
+</main>
+</div>
+<script>
+let data=[
+['Поставка электромобилей для корпоративного автопарка','АО Городская мобильность','Москва',94],
+['Запрос КП на 12 электрических автомобилей','Логистик Плюс','Москва и МО',87],
+['Аренда электромобилей для пилота','Urban Move','Санкт-Петербург',81],
+['Корпоративный транспорт для IT-компании','DevCore','Москва',73]
+];
+function render(){let h=data.map(x=>'<div class="opp"><div style="display:flex;justify-content:space-between;gap:15px"><div><b>'+x[0]+'</b><div class="meta">'+x[1]+' · '+x[2]+'</div></div><span class="score">'+x[3]+'%</span></div></div>').join('');recent.innerHTML=h;allOpps.innerHTML=h}
+function show(id,b){document.querySelectorAll('main section').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');title.textContent=b.textContent}
+function searchDemo(){data.unshift(['Новая заявка на обновление корпоративного автопарка','Новая компания','Москва',89]);f24.textContent=+f24.textContent+1;total.textContent=+total.textContent+1;render();alert('Найдена 1 новая Opportunity')}
+render();
+</script>
+</body></html>
