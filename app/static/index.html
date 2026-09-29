@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LeadRadar AI</title>
+  <style>
+    :root{--bg:#08111f;--panel:#0f1b2d;--panel2:#132238;--muted:#8fa2bc;--text:#eef5ff;--blue:#5aa8ff;--green:#4dd7a4;--yellow:#f7c95c;--red:#ff7272;--line:#243956;--shadow:0 18px 48px rgba(0,0,0,.25)}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at top right,#102d53 0,#08111f 34%,#050b14 100%);color:var(--text);min-height:100vh}.hidden{display:none!important}
+    button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh}.sidebar{border-right:1px solid var(--line);background:rgba(8,17,31,.88);backdrop-filter:blur(15px);padding:24px 18px;position:sticky;top:0;height:100vh}.brand{font-weight:800;font-size:21px;letter-spacing:-.4px}.brand span{color:var(--blue)}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:5px}.nav{margin-top:30px;display:grid;gap:7px}.nav button{border:0;background:transparent;color:#b7c7da;padding:11px 12px;border-radius:10px;text-align:left}.nav button:hover,.nav button.active{background:var(--panel2);color:white}.main{padding:30px;max-width:1500px;width:100%;margin:0 auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}.title h1{margin:0;font-size:28px}.title p{margin:6px 0 0;color:var(--muted)}.actions{display:flex;gap:10px;align-items:center}.btn{border:1px solid var(--line);background:var(--panel2);color:white;border-radius:10px;padding:10px 14px;font-weight:650}.btn.primary{border-color:#3f94f1;background:linear-gradient(135deg,#308be9,#496ef1)}.btn.green{border-color:#2fb27f;background:#123c32;color:#87f6cf}.btn.danger{color:#ffb0b0}.grid{display:grid;gap:16px}.kpis{grid-template-columns:repeat(5,minmax(0,1fr))}.card{background:linear-gradient(180deg,rgba(19,34,56,.97),rgba(12,24,41,.97));border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.kpi{padding:18px}.kpi .label{color:var(--muted);font-size:12px}.kpi .value{font-size:28px;font-weight:800;margin-top:7px}.section{margin-top:18px;padding:20px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.section h2{font-size:17px;margin:0}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:12px 13px;border-bottom:1px solid #1e314b;text-align:left;vertical-align:top}th{font-size:12px;color:#a9bad0;background:#0d192a;position:sticky;top:0}td{font-size:13px}.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:11px;background:#172943;color:#c9d8eb}.badge.green{background:#12382f;color:#78e9be}.badge.yellow{background:#3a3118;color:#f5d574}.badge.red{background:#3d1e25;color:#ff9ca9}.score{font-weight:800}.score.hi{color:var(--green)}.score.mid{color:var(--yellow)}.muted{color:var(--muted)}a{color:#75b8ff}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#aebdd0}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);background:#091422;color:white;border-radius:10px;padding:11px}.field textarea{min-height:90px;resize:vertical}.auth{min-height:100vh;display:grid;place-items:center;padding:30px}.auth-card{width:min(560px,100%);padding:28px}.auth-tabs{display:flex;gap:8px;margin:18px 0}.auth-tabs button{flex:1}.notice{padding:12px 14px;border:1px solid #385a7c;background:#0d2a47;border-radius:11px;color:#bfe0ff;font-size:13px}.notice.demo{border-color:#725a20;background:#30270f;color:#ffe6a2}.two{grid-template-columns:1.25fr .75fr}.opp-title{font-weight:720;max-width:520px}.opp-sub{margin-top:5px;font-size:12px;color:var(--muted);line-height:1.4}.source{font-size:11px}.empty{padding:38px;text-align:center;color:var(--muted)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.62);display:grid;place-items:center;padding:20px;z-index:50}.modal-box{width:min(820px,100%);max-height:90vh;overflow:auto;padding:24px}.modal-head{display:flex;justify-content:space-between;gap:20px}.modal h2{margin:0}.close{border:0;background:transparent;color:white;font-size:26px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{border:1px solid #375473;background:#0d1f34;border-radius:999px;padding:5px 9px;font-size:12px}.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#07111e;border:1px solid var(--line);padding:10px;border-radius:8px;word-break:break-all;font-size:12px}.toast{position:fixed;right:20px;bottom:20px;background:#162a45;border:1px solid #385b82;color:white;padding:12px 16px;border-radius:11px;z-index:80;box-shadow:var(--shadow)}
+    @media(max-width:1000px){.shell{grid-template-columns:1fr}.sidebar{height:auto;position:relative;border-right:0;border-bottom:1px solid var(--line)}.nav{display:flex;overflow:auto;margin-top:16px}.kpis{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.main{padding:18px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+  </style>
+</head>
+<body>
+<div id="auth" class="auth">
+  <div class="card auth-card">
+    <div class="brand">LeadRadar <span>AI</span><small>НАЙТИ → ПРОВЕРИТЬ → ОЦЕНИТЬ → ДОСТАВИТЬ</small></div>
+    <div class="auth-tabs"><button class="btn primary" onclick="showAuth('register')">Регистрация</button><button class="btn" onclick="showAuth('login')">Войти</button></div>
+    <div id="registerPane">
+      <div class="form-grid">
+        <div class="field full"><label>Компания</label><input id="rOrg" placeholder="ООО Компания" /></div>
+        <div class="field full"><label>Сайт компании</label><input id="rSite" placeholder="https://company.ru" /></div>
+        <div class="field"><label>Ваше имя</label><input id="rName" placeholder="Иван" /></div>
+        <div class="field"><label>Email</label><input id="rEmail" type="email" placeholder="you@company.ru" /></div>
+        <div class="field full"><label>Пароль</label><input id="rPass" type="password" placeholder="Минимум 6 символов" /></div>
+      </div>
+      <button class="btn primary" style="width:100%;margin-top:16px" onclick="register()">Создать аккаунт и проанализировать сайт</button>
+    </div>
+    <div id="loginPane" class="hidden">
+      <div class="form-grid">
+        <div class="field full"><label>Email</label><input id="lEmail" type="email" /></div>
+        <div class="field full"><label>Пароль</label><input id="lPass" type="password" /></div>
+      </div>
+      <button class="btn primary" style="width:100%;margin-top:16px" onclick="login()">Войти</button>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="shell hidden">
+  <aside class="sidebar">
+    <div class="brand">LeadRadar <span>AI</span><small id="orgName"></small></div>
+    <nav class="nav">
+      <button class="active" data-view="dashboard" onclick="go('dashboard',this)">Обзор</button>
+      <button data-view="opportunities" onclick="go('opportunities',this)">Возможности</button>
+      <button data-view="profiles" onclick="go('profiles',this)">Поисковые профили</button>
+      <button data-view="deliveries" onclick="go('deliveries',this)">Доставка</button>
+      <button data-view="integrations" onclick="go('integrations',this)">Интеграции</button>
+      <button data-view="settings" onclick="go('settings',this)">Настройки</button><button id="adminNav" class="hidden" data-view="admin" onclick="go('admin',this);loadAdmin()">Админ</button><button onclick="logout()">Выйти</button>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div class="title"><h1 id="pageTitle">Обзор</h1><p id="pageSub">Коммерческие возможности в одном окне</p></div>
+      <div class="actions"><button class="btn" onclick="exportXlsx()">Excel</button><button class="btn primary" onclick="runFirstProfile()">Запустить поиск</button></div>
+    </div>
+    <div id="systemNotice"></div>
+
+    <section id="view-dashboard" class="view">
+      <div class="grid kpis">
+        <div class="card kpi"><div class="label">Найдено за 24ч</div><div class="value" id="kFound">0</div></div>
+        <div class="card kpi"><div class="label">Всего возможностей</div><div class="value" id="kTotal">0</div></div>
+        <div class="card kpi"><div class="label">В работе</div><div class="value" id="kWork">0</div></div>
+        <div class="card kpi"><div class="label">Сумма возможностей</div><div class="value" id="kSum">0 ₽</div></div>
+        <div class="card kpi"><div class="label">Ошибки доставки</div><div class="value" id="kFail">0</div></div>
+      </div>
+      <div class="grid two">
+        <div class="card section"><div class="section-head"><h2>Свежие возможности</h2><button class="btn" onclick="go('opportunities')">Все</button></div><div id="recentOpps"></div></div>
+        <div class="card section"><div class="section-head"><h2>Последние поиски</h2></div><div id="recentRuns"></div></div>
+      </div>
+    </section>
+
+    <section id="view-opportunities" class="view hidden">
+      <div class="card section">
+        <div class="section-head"><h2>Opportunity</h2><div><select id="oppStatusFilter" class="btn" onchange="loadOpportunities()"><option value="">Все статусы</option></select></div></div>
+        <div id="opportunitiesTable"></div>
+      </div>
+    </section>
+
+    <section id="view-profiles" class="view hidden">
+      <div class="card section"><div class="section-head"><h2>Search Profiles</h2><div style="display:flex;gap:8px"><button class="btn" onclick="rebuildProfile()">Повторно проанализировать сайт</button><button class="btn primary" onclick="newProfile()">+ Новый профиль</button></div></div><div id="profilesList"></div></div>
+    </section>
+
+    <section id="view-deliveries" class="view hidden">
+      <div class="card section"><div class="section-head"><h2>Delivery Log</h2><button class="btn" onclick="loadDeliveries()">Обновить</button></div><div id="deliveriesTable"></div></div>
+    </section>
+
+    <section id="view-integrations" class="view hidden">
+      <div class="grid two">
+        <div class="card section">
+          <h2>Partner API / Webhook</h2>
+          <div class="form-grid" style="margin-top:14px">
+            <div class="field full"><label>Название</label><input id="iName" value="Partner CRM" /></div>
+            <div class="field full"><label>Endpoint URL</label><input id="iEndpoint" placeholder="https://crm.company.ru/webhooks/leadradar" /></div>
+            <div class="field full"><label>Secret для HMAC подписи</label><input id="iSecret" placeholder="secret" /></div>
+            <div class="field"><label>Минимальный score</label><input id="iScore" type="number" value="60" /></div>
+          </div>
+          <button class="btn primary" style="margin-top:14px" onclick="addIntegration()">Добавить webhook</button>
+        </div>
+        <div class="card section"><div class="section-head"><h2>Подключенные интеграции</h2></div><div id="integrationsList"></div></div>
+      </div>
+    </section>
+
+    <section id="view-settings" class="view hidden">
+      <div class="grid two">
+        <div class="card section">
+          <h2>Каналы доставки</h2>
+          <div class="field" style="margin-top:14px"><label>Email получателей, через запятую</label><textarea id="sEmails"></textarea></div>
+          <button class="btn primary" style="margin-top:14px" onclick="saveSettings()">Сохранить</button>
+          <div style="margin-top:20px"><div class="muted" style="font-size:12px">Telegram код привязки</div><div id="tgCode" class="code" style="margin-top:6px"></div><div class="muted" style="font-size:12px;margin-top:7px">Отправьте боту: /start КОД</div></div>
+        </div>
+        <div class="card section">
+          <h2>REST API</h2>
+          <p class="muted">Передавайте ключ в заголовке <b>X-API-Key</b>.</p>
+          <div id="apiKey" class="code"></div>
+          <h2 style="margin-top:22px">Состояние</h2><div id="sysState" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-admin" class="view hidden">
+      <div class="grid kpis">
+        <div class="card kpi"><div class="label">Компании</div><div class="value" id="aOrgs">0</div></div>
+        <div class="card kpi"><div class="label">Пользователи</div><div class="value" id="aUsers">0</div></div>
+        <div class="card kpi"><div class="label">Профили</div><div class="value" id="aProfiles">0</div></div>
+        <div class="card kpi"><div class="label">Opportunity</div><div class="value" id="aOpps">0</div></div>
+        <div class="card kpi"><div class="label">Delivery failed</div><div class="value" id="aFailed">0</div></div>
+      </div>
+    </section>
+  </main>
+</div>
+<div id="modal" class="modal hidden"><div class="card modal-box"><div id="modalContent"></div></div></div>
+<div id="toast" class="toast hidden"></div>
+<script>
+const STATUSES=['Новая','Просмотрена','В работе','Подготовка КП','КП отправлено','Переговоры','Победа','Проиграна','Не подходит'];
+let ME=null, PROFILES=[], OPPS=[];
+async function api(url,opts={}){const r=await fetch(url,{headers:{'Content-Type':'application/json',...(opts.headers||{})},...opts});if(r.status===401){showAuth('login');document.getElementById('auth').classList.remove('hidden');document.getElementById('app').classList.add('hidden');throw new Error('auth');}let data=null;const ct=r.headers.get('content-type')||'';data=ct.includes('json')?await r.json():await r.text();if(!r.ok)throw new Error(data.detail||data||'Ошибка');return data}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.remove('hidden');setTimeout(()=>el.classList.add('hidden'),2800)}
+function showAuth(type){document.getElementById('registerPane').classList.toggle('hidden',type!=='register');document.getElementById('loginPane').classList.toggle('hidden',type!=='login')}
+async function register(){try{await api('/api/auth/register',{method:'POST',body:JSON.stringify({organization_name:rOrg.value,site_url:rSite.value,name:rName.value,email:rEmail.value,password:rPass.value})});await boot();toast('Аккаунт создан')}catch(e){toast(e.message)}}
+async function login(){try{await api('/api/auth/login',{method:'POST',body:JSON.stringify({email:lEmail.value,password:lPass.value})});await boot()}catch(e){toast(e.message)}}
+async function boot(){try{ME=await api('/api/me');document.getElementById('auth').classList.add('hidden');document.getElementById('app').classList.remove('hidden');orgName.textContent=ME.organization.name;sEmails.value=ME.organization.email_recipients||'';tgCode.textContent=ME.organization.telegram_link_code+(ME.organization.telegram_connected?'  ✓ подключен':'');apiKey.textContent=ME.organization.api_key;renderSystem();adminNav.classList.toggle('hidden',!ME.user.is_admin);document.getElementById('oppStatusFilter').innerHTML='<option value="">Все статусы</option>'+STATUSES.map(x=>`<option>${x}</option>`).join('');await Promise.all([loadAnalytics(),loadProfiles(),loadOpportunities(),loadRuns(),loadDeliveries(),loadIntegrations()]);}catch(e){}}
+function renderSystem(){let s=ME.system;systemNotice.innerHTML=s.demo_mode?'<div class="notice demo" style="margin-bottom:16px">DEMO MODE: интерфейс и весь pipeline работают, но реальные источники включатся после добавления ключей Yandex/SERP API.</div>':(!s.live_search?'<div class="notice" style="margin-bottom:16px">Поисковые API пока не настроены.</div>':'');sysState.innerHTML=`<div class="chips"><span class="chip">Поиск: ${s.live_search?'LIVE':'нет ключей'}</span><span class="chip">Telegram: ${s.telegram_configured?'настроен':'нет токена'}</span><span class="chip">Email: ${s.smtp_configured?'настроен':'нет SMTP'}</span><span class="chip">AI: ${s.openai_configured?'OpenAI':'heuristics'}</span></div>`}
+function go(view,btn=null){document.querySelectorAll('.view').forEach(x=>x.classList.add('hidden'));document.getElementById('view-'+view).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');else document.querySelector(`.nav button[data-view="${view}"]`)?.classList.add('active');const map={dashboard:['Обзор','Коммерческие возможности в одном окне'],opportunities:['Возможности','Все найденные и проверенные Opportunity'],profiles:['Поисковые профили','Что именно и где ищет система'],deliveries:['Доставка','Email, Telegram и Partner API'],integrations:['Интеграции','Передача Opportunity в CRM партнёров'],settings:['Настройки','Каналы, API и состояние системы'],admin:['Админ','Состояние SaaS-платформы']};pageTitle.textContent=map[view][0];pageSub.textContent=map[view][1]}
+async function loadAnalytics(){let a=await api('/api/v1/analytics');kFound.textContent=a.found_24h;kTotal.textContent=a.total;kWork.textContent=a.in_work;kSum.textContent=new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(a.sum_amount)+' ₽';kFail.textContent=a.delivery_failed}
+async function loadProfiles(){PROFILES=await api('/api/v1/search-profiles');profilesList.innerHTML=PROFILES.length?PROFILES.map(p=>`<div class="card" style="padding:16px;margin-bottom:10px;background:#0a1728"><div style="display:flex;justify-content:space-between;gap:16px"><div><b>${esc(p.name)}</b><div class="muted" style="font-size:12px;margin-top:5px">score ≥ ${p.min_score} · каждые ${p.schedule_hours} ч · ${p.is_active?'активен':'выкл'}</div><div class="chips" style="margin-top:10px">${[...p.services,...p.products,...p.keywords].slice(0,8).map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div></div><div style="display:flex;gap:8px;align-items:start"><button class="btn" onclick="editProfile(${p.id})">Изменить</button><button class="btn primary" onclick="runProfile(${p.id})">Поиск</button></div></div></div>`).join(''):'<div class="empty">Нет поисковых профилей</div>'}
+async function loadOpportunities(){let st=oppStatusFilter?.value||'';OPPS=await api('/api/v1/opportunities?limit=200'+(st?'&status='+encodeURIComponent(st):''));renderOppTable();renderRecent()}
+function renderOppTable(){if(!OPPS.length){opportunitiesTable.innerHTML='<div class="empty">Пока нет возможностей. Запустите поиск.</div>';return}opportunitiesTable.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Opportunity</th><th>Score</th><th>Тип</th><th>Регион</th><th>Бюджет</th><th>Статус</th><th>Источник</th></tr></thead><tbody>${OPPS.map(o=>`<tr><td><div class="opp-title"><a href="#" onclick="openOpp('${o.id}');return false">${esc(o.title)}</a></div><div class="opp-sub">${esc((o.ai_summary||o.description||'').slice(0,180))}</div></td><td><span class="score ${o.relevance_score>=80?'hi':'mid'}">${o.relevance_score}%</span></td><td><span class="badge">${esc(o.type)}</span></td><td>${esc(o.region||'-')}</td><td>${o.amount!=null?new Intl.NumberFormat('ru-RU').format(o.amount)+' '+o.currency:'-'}</td><td><select class="btn" onchange="setStatus('${o.id}',this.value)">${STATUSES.map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select></td><td><div class="source">${esc(o.source)}</div><a href="${escAttr(o.source_url)}" target="_blank">Открыть</a></td></tr>`).join('')}</tbody></table></div>`}
+function renderRecent(){recentOpps.innerHTML=OPPS.slice(0,6).map(o=>`<div style="padding:11px 0;border-bottom:1px solid #21344d"><div style="display:flex;justify-content:space-between;gap:12px"><a href="#" onclick="openOpp('${o.id}');return false"><b>${esc(o.title.slice(0,90))}</b></a><span class="score ${o.relevance_score>=80?'hi':'mid'}">${o.relevance_score}%</span></div><div class="muted" style="font-size:12px;margin-top:5px">${esc(o.region||'')} · ${esc(o.source)}</div></div>`).join('')||'<div class="empty">Запустите первый поиск</div>'}
+async function loadRuns(){let rs=await api('/api/v1/search-runs');recentRuns.innerHTML=rs.slice(0,8).map(r=>`<div style="padding:10px 0;border-bottom:1px solid #21344d"><div><span class="badge ${r.status==='completed'?'green':r.status==='failed'?'red':'yellow'}">${r.status}</span> <span class="muted">#${r.id}</span></div><div style="font-size:12px;margin-top:6px">${r.raw_results_count} найдено · ${r.created_count} новых</div></div>`).join('')||'<div class="empty">Поисков еще не было</div>'}
+async function runFirstProfile(){if(!PROFILES.length){toast('Сначала создайте профиль');return}await runProfile(PROFILES[0].id)}
+async function runProfile(id){try{await api(`/api/v1/search-profiles/${id}/run`,{method:'POST'});toast('Поиск запущен');setTimeout(async()=>{await loadRuns();await loadOpportunities();await loadAnalytics()},2500)}catch(e){toast(e.message)}}
+async function setStatus(id,status){try{await api(`/api/v1/opportunities/${id}/status`,{method:'POST',body:JSON.stringify({status})});toast('Статус изменён');loadAnalytics()}catch(e){toast(e.message)}}
+function openOpp(id){let o=OPPS.find(x=>x.id===id);if(!o)return;modalContent.innerHTML=`<div class="modal-head"><div><h2>${esc(o.title)}</h2><div class="muted" style="margin-top:7px">${esc(o.source)} · ${esc(o.region||'регион не указан')}</div></div><button class="close" onclick="closeModal()">×</button></div><div class="grid kpis" style="grid-template-columns:repeat(3,1fr);margin-top:18px"><div class="card kpi"><div class="label">Релевантность</div><div class="value">${o.relevance_score}%</div></div><div class="card kpi"><div class="label">Бюджет</div><div class="value" style="font-size:20px">${o.amount!=null?new Intl.NumberFormat('ru-RU').format(o.amount)+' '+o.currency:'-'}</div></div><div class="card kpi"><div class="label">Срок</div><div class="value" style="font-size:20px">${o.deadline?new Date(o.deadline).toLocaleDateString('ru-RU'):'-'}</div></div></div><h3>Суть</h3><p style="line-height:1.6">${esc(o.ai_summary||o.description)}</p><h3>Почему подходит</h3><div class="chips">${o.relevance_reasons.map(x=>`<span class="chip">✓ ${esc(x)}</span>`).join('')}</div><div style="display:flex;gap:10px;margin-top:22px"><a class="btn primary" href="${escAttr(o.source_url)}" target="_blank">Открыть источник</a><button class="btn green" onclick="setStatus('${o.id}','В работе');closeModal()">В работу</button><button class="btn" onclick="setStatus('${o.id}','Не подходит');closeModal()">Не подходит</button></div>`;modal.classList.remove('hidden')}
+function closeModal(){modal.classList.add('hidden')}
+async function loadDeliveries(){let ds=await api('/api/v1/deliveries');deliveriesTable.innerHTML=ds.length?`<div class="table-wrap"><table><thead><tr><th>ID</th><th>Opportunity</th><th>Канал</th><th>Статус</th><th>Попытки</th><th>Ошибка</th></tr></thead><tbody>${ds.map(d=>`<tr><td>#${d.id}</td><td>${esc(d.opportunity_id)}</td><td>${esc(d.channel)}</td><td><span class="badge ${d.status==='delivered'?'green':d.status==='failed'?'red':'yellow'}">${d.status}</span></td><td>${d.attempts}</td><td class="muted">${esc(d.last_error||'')}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Delivery jobs появятся после новых Opportunity</div>'}
+async function loadIntegrations(){let xs=await api('/api/v1/integrations');integrationsList.innerHTML=xs.length?xs.map(x=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><b>${esc(x.name)}</b><div class="muted" style="font-size:12px;margin:4px 0">score ≥ ${x.min_relevance_score}</div><div class="code">${esc(x.endpoint_url)}</div><button class="btn" style="margin-top:8px" onclick="testIntegration(${x.id})">Тест</button></div>`).join(''):'<div class="empty">Нет webhook интеграций</div>'}
+async function addIntegration(){try{await api('/api/v1/integrations',{method:'POST',body:JSON.stringify({name:iName.value,endpoint_url:iEndpoint.value,secret:iSecret.value,api_key:iApiKey.value,min_relevance_score:+iScore.value||60,is_active:true})});toast('Webhook добавлен');loadIntegrations()}catch(e){toast(e.message)}}
+async function testIntegration(id){try{let r=await api(`/api/v1/integrations/${id}/test`,{method:'POST'});toast(r.ok?'Тест доставлен':'Ошибка: '+(r.error||r.http_code))}catch(e){toast(e.message)}}
+async function saveSettings(){try{await api('/api/settings',{method:'PUT',body:JSON.stringify({email_recipients:sEmails.value})});ME.organization.email_recipients=sEmails.value;toast('Настройки сохранены')}catch(e){toast(e.message)}}
+function newProfile(){profileModal({name:'Новый профиль',products:[],services:[],keywords:[],minus_words:['вакансия','работа'],regions:['Россия'],customer_types:['B2B','B2G'],min_score:60,min_budget:null,schedule_hours:6,is_active:true},null)}
+function editProfile(id){let p=PROFILES.find(x=>x.id===id);profileModal(p,id)}
+function profileModal(p,id){modalContent.innerHTML=`<div class="modal-head"><h2>${id?'Изменить':'Создать'} Search Profile</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:18px"><div class="field full"><label>Название</label><input id="pName" value="${escAttr(p.name)}"></div><div class="field"><label>Услуги, через запятую</label><textarea id="pServices">${esc(p.services.join(', '))}</textarea></div><div class="field"><label>Товары, через запятую</label><textarea id="pProducts">${esc(p.products.join(', '))}</textarea></div><div class="field full"><label>Ключевые слова</label><textarea id="pKeywords">${esc(p.keywords.join(', '))}</textarea></div><div class="field"><label>Минус-слова</label><textarea id="pMinus">${esc(p.minus_words.join(', '))}</textarea></div><div class="field"><label>География</label><textarea id="pRegions">${esc(p.regions.join(', '))}</textarea></div><div class="field"><label>Минимальный score</label><input id="pScore" type="number" value="${p.min_score}"></div><div class="field"><label>Период, часов</label><input id="pHours" type="number" value="${p.schedule_hours}"></div></div><button class="btn primary" style="margin-top:16px" onclick="saveProfile(${id||'null'})">Сохранить профиль</button>`;modal.classList.remove('hidden')}
+function split(v){return v.split(',').map(x=>x.trim()).filter(Boolean)}
+async function saveProfile(id){let body={name:pName.value,services:split(pServices.value),products:split(pProducts.value),keywords:split(pKeywords.value),minus_words:split(pMinus.value),regions:split(pRegions.value),customer_types:['B2B','B2G'],min_score:+pScore.value||60,min_budget:null,schedule_hours:+pHours.value||6,is_active:true};try{await api(id?`/api/v1/search-profiles/${id}`:'/api/v1/search-profiles',{method:id?'PUT':'POST',body:JSON.stringify(body)});closeModal();toast('Профиль сохранён');loadProfiles()}catch(e){toast(e.message)}}
+async function rebuildProfile(){try{toast('Анализирую сайт...');await api('/api/rebuild-main-profile',{method:'POST'});await loadProfiles();toast('Основной профиль обновлён')}catch(e){toast(e.message)}}
+async function loadAdmin(){if(!ME?.user?.is_admin)return;try{let a=await api('/api/admin/overview');aOrgs.textContent=a.organizations;aUsers.textContent=a.users;aProfiles.textContent=a.profiles;aOpps.textContent=a.opportunities;aFailed.textContent=a.delivery_failed}catch(e){toast(e.message)}}
+async function logout(){await api('/api/auth/logout',{method:'POST'});location.reload()}
+function exportXlsx(){window.location='/api/v1/export.xlsx'}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}function escAttr(s){return esc(s).replace(/`/g,'')}
+boot();
+</script>
+</body>
+</html>
