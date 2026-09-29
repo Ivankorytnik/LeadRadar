@@ -4,8 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "app/main.py.gz.b64"
-      - "app/static/index.html.gz.b64"
+      - "staging/**"
       - ".github/workflows/expand-sources.yml"
 
 permissions:
@@ -18,10 +17,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Expand staged sources
         run: |
+          set -e
           mkdir -p app/static
-          base64 -d app/main.py.gz.b64 | gzip -d > app/main.py
-          base64 -d app/static/index.html.gz.b64 | gzip -d > app/static/index.html
-          rm app/main.py.gz.b64 app/static/index.html.gz.b64
+          cat staging/main.part.* | base64 -d | gzip -d > app/main.py
+          cat staging/html.part.* | base64 -d | gzip -d > app/static/index.html
+          test -s app/main.py
+          test -s app/static/index.html
+          rm -rf staging
+          rm -f app/main.py.gz.b64 app/static/index.html.gz.b64
           rm .github/workflows/expand-sources.yml
       - name: Commit expanded sources
         run: |
