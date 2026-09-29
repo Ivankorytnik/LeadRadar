@@ -1,0 +1,32 @@
+name: Expand staged LeadRadar sources
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/main.py.gz.b64"
+      - "app/static/index.html.gz.b64"
+      - ".github/workflows/expand-sources.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Expand staged sources
+        run: |
+          mkdir -p app/static
+          base64 -d app/main.py.gz.b64 | gzip -d > app/main.py
+          base64 -d app/static/index.html.gz.b64 | gzip -d > app/static/index.html
+          rm app/main.py.gz.b64 app/static/index.html.gz.b64
+          rm .github/workflows/expand-sources.yml
+      - name: Commit expanded sources
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add LeadRadar MVP application source [skip ci]"
+          git push
