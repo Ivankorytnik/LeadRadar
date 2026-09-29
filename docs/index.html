@@ -14,6 +14,8 @@ nav button.active,nav button:hover{background:#142944;color:white}.main{padding:
 .grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(5,1fr);margin-top:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}.label{font-size:12px;color:var(--muted)}.value{font-size:28px;font-weight:800;margin-top:7px}
 .two{grid-template-columns:1.35fr .65fr;margin-top:16px}.section h2{margin:0 0 14px;font-size:17px}.opp{padding:12px 0;border-bottom:1px solid #223954}.opp b{display:block}.meta{font-size:12px;color:var(--muted);margin-top:5px}.score{color:var(--green);font-weight:800}
 .hidden{display:none}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{padding:5px 8px;border:1px solid #35577f;border-radius:999px;font-size:11px}.profile{padding:14px;border:1px solid #29466c;border-radius:12px}
+.launch{margin-top:16px;padding:22px}.launch h2{margin:0;font-size:20px}.launch p{color:var(--muted);margin:7px 0 0;line-height:1.5}.site-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:17px}.site-row input{min-width:0;border:1px solid var(--line);background:#081522;color:#fff;border-radius:10px;padding:12px 14px;font-size:14px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}.step{position:relative;padding:13px;border:1px solid #28466d;border-radius:12px;background:#0b192b;min-height:86px}.step-num{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#1c385c;color:#a9c8eb;font-size:11px;font-weight:800;margin-bottom:9px}.step b{font-size:12px;line-height:1.4}.step .meta{line-height:1.35}.step.active{border-color:#4d91e8;background:#0d2440}.step.active .step-num{background:#317fe8;color:#fff}.step.done{border-color:#2e8e70}.step.done .step-num{background:#20785e;color:#fff}.progress{height:6px;background:#07111f;border:1px solid #203958;border-radius:999px;overflow:hidden;margin-top:14px}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#317fe8,#54d7aa);transition:width .45s}.query-box{margin-top:16px;padding:16px;border:1px solid #2b4b72;border-radius:12px;background:#0a1829}.query-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.query-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.query{padding:8px 10px;border:1px solid #35608f;background:#102742;border-radius:9px;font-size:12px}.sources{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.source-card{padding:13px;border:1px solid #28466d;border-radius:11px;background:#0b192b}.source-card b{display:block;font-size:12px}.source-card span{display:block;color:var(--muted);font-size:11px;margin-top:5px}.source-card.on{border-color:#2e8e70}.specialist{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;border:1px solid #3c5578;border-radius:11px;background:#0c1c30}.specialist b{font-size:12px}.specialist span{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+@media(max-width:900px){.steps,.sources{grid-template-columns:1fr 1fr}.site-row{grid-template-columns:1fr}.query-head,.specialist{align-items:flex-start;flex-direction:column}}
 @media(max-width:900px){.wrap{grid-template-columns:1fr}.side{border-right:0;border-bottom:1px solid var(--line)}nav{display:flex;overflow:auto}.kpis{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
 </style>
 </head>
@@ -33,6 +35,39 @@ nav button.active,nav button:hover{background:#142944;color:white}.main{padding:
 <div class="top"><div><h1 id="title">Обзор</h1><div class="meta">LeadRadar AI MVP</div></div><button class="btn primary" onclick="searchDemo()">Запустить поиск</button></div>
 <div class="notice">Demo-интерфейс GitHub Pages. Реальный поиск и отправка подключатся после развертывания FastAPI backend.</div>
 <section id="dash">
+<div class="card launch">
+  <h2>Найдём заявки и тендеры именно под вашу компанию</h2>
+  <p>Вставьте ссылку на ваш сайт. LeadRadar проанализирует товары и услуги, сформирует целевые запросы и начнёт поиск спроса на доступных площадках.</p>
+  <div class="site-row">
+    <input id="companySite" type="url" placeholder="https://ваш-сайт.ru">
+    <button class="btn primary" onclick="startSiteSearch()">Проанализировать сайт и начать поиск</button>
+  </div>
+  <div class="progress"><i id="launchProgress"></i></div>
+  <div class="steps">
+    <div class="step" id="step1"><div class="step-num">1</div><b>Вставьте ссылку на ваш сайт</b><div class="meta" id="step1meta">Ожидаем адрес сайта</div></div>
+    <div class="step" id="step2"><div class="step-num">2</div><b>Формируем целевые запросы</b><div class="meta" id="step2meta">AI изучит товары и услуги</div></div>
+    <div class="step" id="step3"><div class="step-num">3</div><b>Идёт поиск по площадкам</b><div class="meta" id="step3meta">Тендеры, Telegram, MAX, объявления</div></div>
+    <div class="step" id="step4"><div class="step-num">4</div><b>Подбор на основе данных вашего сайта готов</b><div class="meta" id="step4meta">Покажем релевантные возможности</div></div>
+  </div>
+  <div id="queryBox" class="query-box hidden">
+    <div class="query-head">
+      <div><b>Целевые запросы сформированы</b><div class="meta">LeadRadar будет использовать их для постоянного поиска новых возможностей.</div></div>
+      <button class="btn" onclick="contactSpecialist()">Связаться с нашим специалистом</button>
+    </div>
+    <div class="query-list" id="queryList"></div>
+    <div class="specialist">
+      <div><b>Хотите точнее настроить поиск?</b><span>Наш специалист поможет отредактировать целевые запросы, минус-слова, географию и приоритеты.</span></div>
+      <button class="btn" onclick="contactSpecialist()">Отредактировать целевой запрос</button>
+    </div>
+    <div style="margin-top:16px"><b style="font-size:13px">Где ищем</b></div>
+    <div class="sources">
+      <div class="source-card" id="srcTender"><b>Тендеры</b><span>Госзакупки и коммерческие закупки</span></div>
+      <div class="source-card" id="srcTelegram"><b>Telegram</b><span>Каналы, группы и открытые публикации</span></div>
+      <div class="source-card" id="srcMax"><b>MAX</b><span>Доступные публичные источники и сообщества</span></div>
+      <div class="source-card" id="srcAds"><b>Площадки объявлений</b><span>Доски объявлений и открытые заявки</span></div>
+    </div>
+  </div>
+</div>
 <div class="grid kpis">
 <div class="card"><div class="label">Найдено за 24ч</div><div class="value" id="f24">4</div></div>
 <div class="card"><div class="label">Всего возможностей</div><div class="value" id="total">18</div></div>
@@ -61,6 +96,47 @@ let data=[
 function render(){let h=data.map(x=>'<div class="opp"><div style="display:flex;justify-content:space-between;gap:15px"><div><b>'+x[0]+'</b><div class="meta">'+x[1]+' · '+x[2]+'</div></div><span class="score">'+x[3]+'%</span></div></div>').join('');recent.innerHTML=h;allOpps.innerHTML=h}
 function show(id,b){document.querySelectorAll('main section').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');title.textContent=b.textContent}
 function searchDemo(){data.unshift(['Новая заявка на обновление корпоративного автопарка','Новая компания','Москва',89]);f24.textContent=+f24.textContent+1;total.textContent=+total.textContent+1;render();alert('Найдена 1 новая Opportunity')}
+function resetLaunch(){
+  ['step1','step2','step3','step4'].forEach(id=>document.getElementById(id).classList.remove('active','done'));
+  ['srcTender','srcTelegram','srcMax','srcAds'].forEach(id=>document.getElementById(id).classList.remove('on'));
+  launchProgress.style.width='0%';queryBox.classList.add('hidden')
+}
+function startSiteSearch(){
+  let raw=(companySite.value||'').trim();
+  if(!raw){companySite.focus();alert('Вставьте ссылку на ваш сайт');return}
+  if(!/^https?:\/\//i.test(raw)) raw='https://'+raw;
+  let host='вашего сайта';try{host=new URL(raw).hostname.replace(/^www\./,'')}catch(e){}
+  resetLaunch();
+  step1.classList.add('active');step1meta.textContent='Сайт: '+host;launchProgress.style.width='15%';
+  setTimeout(()=>{step1.classList.remove('active');step1.classList.add('done');step2.classList.add('active');step2meta.textContent='Анализируем товары, услуги и географию';launchProgress.style.width='40%'},650);
+  setTimeout(()=>{
+    step2.classList.remove('active');step2.classList.add('done');step3.classList.add('active');
+    step3meta.textContent='Ищем одновременно по 4 типам источников';launchProgress.style.width='68%';
+    queryBox.classList.remove('hidden');
+    queryList.innerHTML=[
+      'тендер + товары и услуги '+host,
+      'закупка + поставщик '+host,
+      'ищем подрядчика / поставщика',
+      'запрос коммерческого предложения',
+      'купить / заказать + услуги сайта'
+    ].map(x=>'<span class="query">'+x+'</span>').join('');
+    ['srcTender','srcTelegram','srcMax','srcAds'].forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('on'),i*180));
+  },1500);
+  setTimeout(()=>{
+    step3.classList.remove('active');step3.classList.add('done');step4.classList.add('active');launchProgress.style.width='90%';
+    step4meta.textContent='Формируем релевантную подборку'
+  },2600);
+  setTimeout(()=>{
+    step4.classList.remove('active');step4.classList.add('done');launchProgress.style.width='100%';
+    step4meta.textContent='Подбор готов. Новые результаты будут появляться автоматически';
+    data.unshift(['Новая возможность, найденная по профилю '+host,'Потенциальный заказчик','Россия',92]);
+    f24.textContent=+f24.textContent+1;total.textContent=+total.textContent+1;render()
+  },3500);
+}
+function contactSpecialist(){
+  const site=(companySite.value||'вашего сайта').trim();
+  alert('Заявка специалисту создана для '+site+'. В рабочей версии здесь будет форма связи и передача запроса менеджеру LeadRadar.')
+}
 render();
 </script>
 </body></html>
