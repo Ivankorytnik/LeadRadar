@@ -1,6 +1,6 @@
 # LeadRadar AI MVP
 
-Рабочий вертикальный MVP SaaS-платформы поиска заявок и тендеров.
+Рабочий вертикальный MVP SaaS-платформы поиска заявок и тендеров.\n\n**Базовое ТЗ проекта:** [docs/TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md)
 
 ## Что реализовано
 
@@ -33,7 +33,7 @@
 
 ```bash
 python -m venv .venv
-# Windows: .venv\\Scripts\\activate
+# Windows: .venv\Scripts\activate
 # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 copy .env.example .env   # Windows
